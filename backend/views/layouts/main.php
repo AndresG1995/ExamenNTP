@@ -40,14 +40,37 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/user/security/login']];
     } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+		$menuItems[] = [
+                    'label' => 'Administrar',
+                    'items' => [
+                        /*[
+                            'label' => 'Noticias',
+                            'url' => ['/noticia'],
+                        ],
+                        [
+                            'label' => 'Categorias',
+                            'url' => ['/categoria'],
+                        ],*/
+                        [
+                            'label' => 'Usuarios',
+                            'url' => ['/user/admin'],
+                        ],
+                    ],
+              ];
+            $menuItems[] = [
+                    'label' => Yii::$app->user->identity->username,
+                    'items' => [
+                        [
+                            'label' => 'Ir a Frontend',
+                            'url' => ['/../../frontend/web']
+                        ],
+                        [
+                            'label' => 'Salir',
+                            'url' => ['/site/logout'],
+                            'linkOptions' => ['data-method' => 'post']
+                        ],
+                    ],
+              ];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
