@@ -43,11 +43,11 @@ AppAsset::register($this);
 		$menuItems[] = [
                     'label' => 'Administrar',
                     'items' => [
-                        /*[
-                            'label' => 'Noticias',
-                            'url' => ['/noticia'],
-                        ],
                         [
+                            'label' => 'Departamento',
+                            'url' => ['/departamento'],
+                        ],
+                        /*[
                             'label' => 'Categorias',
                             'url' => ['/categoria'],
                         ],*/
