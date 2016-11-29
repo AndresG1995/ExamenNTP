@@ -9,12 +9,8 @@ $this->title = 'ExamenNTP';
     <div class="jumbotron">
         <h1>Bienvenido!</h1>
 
-        <p class="lead">Seleccione su bebida.</p>
+        <p class="lead">Esta registrese para comprar una bebida.</p>
 
-        <!--<p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Cafe: $0.5</a></p>-->
-        <p><a class="btn btn-lg btn-success" >Cafe: $0.5</a></p>
-        <p><a class="btn btn-lg btn-success" >Te: $0.4</a></p>
-        <p><a class="btn btn-lg btn-success" >Agua: $0.25</a></p>
     </div>
 
 </div>
