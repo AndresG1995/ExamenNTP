@@ -40,7 +40,7 @@ class DepartamentoController extends Controller
                         'roles' => ['admin'],
                     ],
                     [
-                        'actions' => ['logout', 'index', 'view'],
+                        'actions' => ['logout', 'index', 'view','delete'],
                         'allow' => true,
                         'roles' => ['usuario'],
                     ],
@@ -121,11 +121,16 @@ class DepartamentoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
-        
-        
+        $Departamento  = Departamento::findOne(['created_by'=>Yii::$app->user->identity]);
+       if (isset($Departamento) || Yii::$app->user->can('admin')){
+                    $this->findModel($id)->delete();
+                    return $this->redirect(['index']);
+        } else {
+            throw new \yii\web\HttpException(403,'No permitido, Ud solo puede borrar sus noticias.');
+         
+            die;
+        }
     }
 
     /**
