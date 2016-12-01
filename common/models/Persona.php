@@ -59,6 +59,17 @@ class Persona extends \yii\db\ActiveRecord
         ];
     }
 
+//    public function ()
+//    {
+//        return [
+//            'uid' => 'Uid',
+//            'id_user' => 'Id User',
+//            'idD' => 'Id D',
+//            'idP' => 'Id P',
+//            'nombreP' => 'Nombre P',
+//            'saldo' => 'Saldo',
+//        ];
+//    }
     /**
      * @return \yii\db\ActiveQuery
      */

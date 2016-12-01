@@ -9,6 +9,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\ActiveQuery;
+use \yii\web\Response;
+use yii\helpers\Html;
+use frontend\models\Producto;
+use frontend\models\Persona;
 
 /**
  * PedidoController implements the CRUD actions for Pedido model.
@@ -49,9 +53,22 @@ class PedidoController extends Controller {
      * @return mixed
      */
     public function actionView($id) {
-        return $this->render('view', [
+        $request = Yii::$app->request;
+        if ($request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return [
+                'title' => "Pedido #" . $id,
+                'content' => $this->renderAjax('view', [
                     'model' => $this->findModel($id),
-        ]);
+                ]),
+                'footer' => Html::button('Close', ['class' => 'btn btn-default pull-left', 'data-dismiss' => "modal"])
+                    //.Html::a('Edit', ['update', 'id' => $id], ['class' => 'btn btn-primary', 'role' => 'modal-remote'])
+            ];
+        } else {
+            return $this->render('view', [
+                        'model' => $this->findModel($id),
+            ]);
+        }
     }
 
     /**
@@ -64,16 +81,19 @@ class PedidoController extends Controller {
 
         if ($model->load(Yii::$app->request->post())) {
             $model->id_user = Yii::$app->user->identity->id;
-            if ($model->save()) {
-                $pro = \frontend\models\Producto::find()->where(['idP' => $model->id_producto])->one();
-                $suma = \frontend\models\Persona::find()->where(['id_user' => $model->id_user])->one();
+            $pro = Producto::findOne(['idP' => $model->id_producto]);
+            $suma = Persona::findOne(['id_user' => $model->id_user]);
+            Yii::$app->db->createCommand()->update('Persona', ['saldo' => $suma->saldo + ($pro->precio * $model->cantidad)], ['id_user' => Yii::$app->user->identity->id])->execute();
 
-                Yii::$app->db->createCommand()->update('Persona', ['saldo' => $suma->saldo + ($pro->precio * $model->cantidad)], ['id_user' => Yii::$app->user->identity->id])->excecute();
-                return $this->redirect(['/site/index']);
+
+            if ($model->save()) {
+                return $this->redirect(['site/index']);
             }
             return $this->renderAjax('create', [
                         'model' => $model,
             ]);
+
+            // return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->renderAjax('create', [
                         'model' => $model,
