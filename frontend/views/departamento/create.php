@@ -2,15 +2,15 @@
 
 use yii\helpers\Html;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Departamento */
 
-$this->title = 'Update Departamento: ' . $model->idD;
+/* @var $this yii\web\View */
+/* @var $model frontend\models\Departamento */
+
+$this->title = 'Create Departamento';
 $this->params['breadcrumbs'][] = ['label' => 'Departamentos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idD, 'url' => ['view', 'id' => $model->idD]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="departamento-update">
+<div class="departamento-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

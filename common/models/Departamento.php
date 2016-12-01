@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
@@ -9,6 +9,8 @@ use Yii;
  *
  * @property integer $idD
  * @property string $nombreD
+ *
+ * @property Persona[] $personas
  */
 class Departamento extends \yii\db\ActiveRecord
 {
@@ -40,5 +42,13 @@ class Departamento extends \yii\db\ActiveRecord
             'idD' => 'Id D',
             'nombreD' => 'Nombre D',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPersonas()
+    {
+        return $this->hasMany(Persona::className(), ['idD' => 'idD']);
     }
 }

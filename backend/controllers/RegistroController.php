@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Departamento;
+use app\models\Registro;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * DepartamentoController implements the CRUD actions for Departamento model.
+ * RegistroController implements the CRUD actions for Registro model.
  */
-class DepartamentoController extends Controller
+class RegistroController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,13 +30,13 @@ class DepartamentoController extends Controller
     }
 
     /**
-     * Lists all Departamento models.
+     * Lists all Registro models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Departamento::find(),
+            'query' => Registro::find(),
         ]);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class DepartamentoController extends Controller
     }
 
     /**
-     * Displays a single Departamento model.
+     * Displays a single Registro model.
      * @param integer $id
      * @return mixed
      */
@@ -57,16 +57,16 @@ class DepartamentoController extends Controller
     }
 
     /**
-     * Creates a new Departamento model.
+     * Creates a new Registro model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Departamento();
+        $model = new Registro();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idD]);
+            return $this->redirect(['view', 'id' => $model->idR]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,7 +75,7 @@ class DepartamentoController extends Controller
     }
 
     /**
-     * Updates an existing Departamento model.
+     * Updates an existing Registro model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -85,7 +85,7 @@ class DepartamentoController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idD]);
+            return $this->redirect(['view', 'id' => $model->idR]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -94,7 +94,7 @@ class DepartamentoController extends Controller
     }
 
     /**
-     * Deletes an existing Departamento model.
+     * Deletes an existing Registro model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,15 +107,15 @@ class DepartamentoController extends Controller
     }
 
     /**
-     * Finds the Departamento model based on its primary key value.
+     * Finds the Registro model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Departamento the loaded model
+     * @return Registro the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Departamento::findOne($id)) !== null) {
+        if (($model = Registro::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

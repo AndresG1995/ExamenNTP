@@ -6,23 +6,24 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Departamentos';
+$this->title = 'Registros';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="departamento-index">
+<div class="registro-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Departamento', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Registro', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idD',
-            'nombreD',
+            'idR',
+            'uid',
+            'idP',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

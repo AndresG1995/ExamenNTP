@@ -47,10 +47,18 @@ AppAsset::register($this);
                             'label' => 'Departamento',
                             'url' => ['/departamento'],
                         ],
-                        /*[
-                            'label' => 'Categorias',
-                            'url' => ['/categoria'],
-                        ],*/
+						[
+                            'label' => 'Persona',
+                            'url' => ['/persona'],
+                        ],
+                        [
+                            'label' => 'Producto',
+                            'url' => ['/producto'],
+                        ],
+						[
+                            'label' => 'Registro',
+                            'url' => ['/registro'],
+                        ],
                         [
                             'label' => 'Usuarios',
                             'url' => ['/user/admin'],
