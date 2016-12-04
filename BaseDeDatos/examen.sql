@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-11-2016 a las 01:33:42
+-- Tiempo de generación: 04-12-2016 a las 21:22:41
 -- Versión del servidor: 5.6.24
 -- Versión de PHP: 5.6.8
 
@@ -115,25 +115,6 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `blog_cms`
---
-
-CREATE TABLE IF NOT EXISTS `blog_cms` (
-  `id` int(11) NOT NULL,
-  `Nombre` varchar(30) NOT NULL,
-  `Saldo` double NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `blog_cms`
---
-
-INSERT INTO `blog_cms` (`id`, `Nombre`, `Saldo`) VALUES
-(2, 'Ejemplo', 0);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `categoria`
 --
 
@@ -163,18 +144,16 @@ INSERT INTO `categoria` (`id`, `categoria`, `seo_slug`, `imagen`, `created_by`, 
 --
 
 CREATE TABLE IF NOT EXISTS `departamento` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `idD` int(11) NOT NULL,
+  `nombreD` varchar(50) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `departamento`
 --
 
-INSERT INTO `departamento` (`id`, `nombre`) VALUES
-(1, 'Departamento1'),
-(2, 'Departamento2'),
-(4, 'Departamento3');
+INSERT INTO `departamento` (`idD`, `nombreD`) VALUES
+(1, 'Departamento1');
 
 -- --------------------------------------------------------
 
@@ -211,6 +190,72 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pedido`
+--
+
+CREATE TABLE IF NOT EXISTS `pedido` (
+  `id` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`id`, `id_user`, `id_producto`, `cantidad`) VALUES
+(1, 5, 1, 2),
+(2, 5, 1, 2),
+(3, 5, 2, 2),
+(4, 5, 2, 2),
+(5, 5, 2, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `persona`
+--
+
+CREATE TABLE IF NOT EXISTS `persona` (
+  `uid` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `idD` int(11) NOT NULL,
+  `saldo` double DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `persona`
+--
+
+INSERT INTO `persona` (`uid`, `id_user`, `idD`, `saldo`) VALUES
+(2, 5, 1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `producto`
+--
+
+CREATE TABLE IF NOT EXISTS `producto` (
+  `idP` int(11) NOT NULL,
+  `nombreP` varchar(50) NOT NULL,
+  `precio` float NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`idP`, `nombreP`, `precio`) VALUES
+(1, 'Cafe', 0.5),
+(2, 'Tee', 0.4),
+(3, 'Agua', 0.25),
+(4, 'Agua de Coco', 0.3);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `profile`
 --
 
@@ -233,6 +278,18 @@ CREATE TABLE IF NOT EXISTS `profile` (
 INSERT INTO `profile` (`user_id`, `name`, `public_email`, `gravatar_email`, `gravatar_id`, `location`, `website`, `bio`, `timezone`) VALUES
 (5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `registro`
+--
+
+CREATE TABLE IF NOT EXISTS `registro` (
+  `idR` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `idP` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -334,16 +391,16 @@ ALTER TABLE `auth_rule`
   ADD PRIMARY KEY (`name`);
 
 --
--- Indices de la tabla `blog_cms`
---
-ALTER TABLE `blog_cms`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indices de la tabla `categoria`
 --
 ALTER TABLE `categoria`
   ADD PRIMARY KEY (`id`), ADD KEY `created_by` (`created_by`), ADD KEY `updated_by` (`updated_by`);
+
+--
+-- Indices de la tabla `departamento`
+--
+ALTER TABLE `departamento`
+  ADD PRIMARY KEY (`idD`);
 
 --
 -- Indices de la tabla `migration`
@@ -352,10 +409,34 @@ ALTER TABLE `migration`
   ADD PRIMARY KEY (`version`);
 
 --
+-- Indices de la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `persona`
+--
+ALTER TABLE `persona`
+  ADD PRIMARY KEY (`uid`), ADD KEY `idD` (`idD`), ADD KEY `id_user` (`id_user`);
+
+--
+-- Indices de la tabla `producto`
+--
+ALTER TABLE `producto`
+  ADD PRIMARY KEY (`idP`);
+
+--
 -- Indices de la tabla `profile`
 --
 ALTER TABLE `profile`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indices de la tabla `registro`
+--
+ALTER TABLE `registro`
+  ADD PRIMARY KEY (`idR`), ADD KEY `uid` (`uid`), ADD KEY `idP` (`idP`);
 
 --
 -- Indices de la tabla `social_account`
@@ -380,15 +461,35 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT de la tabla `blog_cms`
---
-ALTER TABLE `blog_cms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `departamento`
+--
+ALTER TABLE `departamento`
+  MODIFY `idD` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `pedido`
+--
+ALTER TABLE `pedido`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT de la tabla `persona`
+--
+ALTER TABLE `persona`
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `producto`
+--
+ALTER TABLE `producto`
+  MODIFY `idP` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT de la tabla `registro`
+--
+ALTER TABLE `registro`
+  MODIFY `idR` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `social_account`
 --
@@ -430,10 +531,24 @@ ADD CONSTRAINT `categoria_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `user` (
 ADD CONSTRAINT `categoria_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`);
 
 --
+-- Filtros para la tabla `persona`
+--
+ALTER TABLE `persona`
+ADD CONSTRAINT `persona_ibfk_1` FOREIGN KEY (`idD`) REFERENCES `departamento` (`idD`),
+ADD CONSTRAINT `persona_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
 -- Filtros para la tabla `profile`
 --
 ALTER TABLE `profile`
 ADD CONSTRAINT `fk_user_profile` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `registro`
+--
+ALTER TABLE `registro`
+ADD CONSTRAINT `registro_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `persona` (`uid`),
+ADD CONSTRAINT `registro_ibfk_2` FOREIGN KEY (`idP`) REFERENCES `producto` (`idP`);
 
 --
 -- Filtros para la tabla `social_account`
